@@ -6,12 +6,12 @@
 
 ## ✨ Features
 
-* 🔐 **User Authentication:** Secure JWT-based registration and login system.
-* 👤 **User Dashboard:** Manage your profile, saved articles, and user activities in one place.
-* 🔖 **Bookmark System:** Save spaceflight news and NASA updates to read later.
-* 💬 **Community Comments:** Engage with other space enthusiasts by posting comments on articles.
-* 🌌 **Spaceflight & NASA API Integration:** Real-time data feeds, articles, and imagery directly from official space sources.
-* ⚡ **Fast UI:** Built with React and powered by Vite for lighting-fast performance.
+*  **User Authentication:** Secure JWT-based registration and login system.
+*  **User Dashboard:** Manage your profile, saved articles, and user activities in one place.
+*  **Bookmark System:** Save spaceflight news and NASA updates to read later.
+*  **Community Comments:** Engage with other space enthusiasts by posting comments on articles.
+*  **Spaceflight & NASA API Integration:** Real-time data feeds, articles, and imagery directly from official space sources.
+*  **Fast UI:** Built with React and powered by Vite for lighting-fast performance.
 
 ---
 
@@ -32,9 +32,6 @@
 
 ---
 
-## 🚀 Getting Started
-
-Follow these instructions to get a copy of the project running locally.
 
 ### Prerequisites
 
