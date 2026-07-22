@@ -96,7 +96,7 @@ a:hover {
   align-items: center;
   padding: 1rem 2rem;
   background-color: var(--bg-card);
-  border-bottom: 0.2px solid var(--border-color);
+  border-bottom: 0px solid var(--border-color);
 }
 
 .navbar-brand a {
@@ -569,4 +569,45 @@ button[type="submit"]:hover {
 .footer-links svg {
   font-size: 1.2rem;
 }
+
+.load-more-btn {
+  /* Positioning & Box Model */
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  margin: 32px auto; /* Centers the button horizontally */
+  padding: 6px 15px;
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  border-radius: 50px; /* Sleek, pill-shaped capsule look */
+
+  /* Typography */
+  font-family: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
+  font-size: 0.875rem; /* 14px */
+  font-weight: 600;
+  letter-spacing: 0.1em;
+  color: #f8fafc;
+  text-transform: uppercase; 
+
+  background-color: #020617; 
+  box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.5);
+  cursor: pointer;
+  
+ 
+  transition: all 0.2s ease-in-out;
+}
+
+
+.load-more-btn:hover {
+  background-color: #0f172a;
+  border-color: #38bdf8; 
+  box-shadow: 0 0 16px rgba(56, 189, 248, 0.25);
+  transform: translateY(-1px);
+}
+
+
+.load-more-btn:active {
+  transform: translateY(1px) scale(0.98);
+  box-shadow: 0 0 8px rgba(56, 189, 248, 0.15);
+}
+
 
