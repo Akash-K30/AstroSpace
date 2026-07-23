@@ -14,7 +14,7 @@ const { user, logout } = useAuth();
   return (
     <nav className="navbar">
       <div className="navbar-brand">
-        <Link to="/">🚀AstroSpace</Link>
+        <Link to="/">AstroSpace</Link>
       </div>
       
       <ul className="navbar-links">

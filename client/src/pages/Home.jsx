@@ -92,11 +92,7 @@ const Home = () => {
           onChange={handleSearchChange}
           className="search-input"
         />
-          <select name="source" value={filters.source} onChange={handleFilterChange}>
-            <option value="">All</option>
-          <option value="NASA">NASA</option>
-          <option value="SPACEFLIGHT">SPACEFLIGHT</option>
-          </select>
+
       
         <select name="sort" value={filters.sort} onChange={handleFilterChange}>
           <option value="latest">Latest</option>

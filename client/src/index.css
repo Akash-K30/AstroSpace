@@ -315,6 +315,7 @@ button[type="submit"]:hover {
   gap: 0.4rem;
   cursor: pointer;
   padding: 0;
+  -webkit-tap-highlight-color: transparent;
 }
 
 .action-btn .count {

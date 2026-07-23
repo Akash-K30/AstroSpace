@@ -67,28 +67,17 @@ const Profile = () => {
         </div>
 
         <div className="form-group">
-          <label htmlFor="avatar">Avatar URL</label>
+          <label htmlFor="avatar">Avatar</label>
           <input
             type="text"
             id="avatar"
             name="avatar"
-            placeholder="👽"
+            placeholder="👩‍🚀"
             value={formData.avatar}
             onChange={handleChange}
           />
         </div>
         
-        {/* Avatar Preview */}
-        {formData.avatar && (
-          <div className="avatar-preview">
-            <p>Preview:</p>
-            <img 
-                src={formData.avatar} 
-                alt="👽" 
-                style={{ width: '100px', borderRadius: '50%' }} 
-            />
-          </div>
-        )}
 
         <button type="submit" disabled={loading}>
           {loading ? 'Saving...' : 'Save Changes'}
