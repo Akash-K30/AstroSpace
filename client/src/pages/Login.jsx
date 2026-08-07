@@ -31,10 +31,7 @@ const Login = () => {
     try {
       const res = await login(formData);
 
-      const tokenString = String(res.token);
-      const userObject = res.user;
-
-      loginAuth(tokenString, userObject);
+      loginAuth(res.user);
 
       navigate('/');
     } catch (err) {

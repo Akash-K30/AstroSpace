@@ -2,6 +2,7 @@ import express from "express";
 import cors from "cors";
 import helmet from "helmet";
 import morgan from "morgan";
+import cookieParser from "cookie-parser";
 
 import errorHandler from "./middleware/errorHandler.js";
 import healthRoutes from "./routes/health.route.js";
@@ -26,6 +27,8 @@ app.use(cors({
 app.use(helmet());
 
 app.use(morgan("dev"));
+
+app.use(cookieParser());
 
 app.use(express.json());
 

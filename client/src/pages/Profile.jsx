@@ -34,8 +34,7 @@ const Profile = () => {
       const updatedUser = await dashboardService.updateProfile(formData);
       
       // Update the AuthContext with the new user data so the Navbar and other components reflect the change
-      const token = localStorage.getItem('token');
-      login(token, updatedUser); 
+      login(updatedUser); 
       
       setMessage("Profile updated successfully!");
     } catch (err) {

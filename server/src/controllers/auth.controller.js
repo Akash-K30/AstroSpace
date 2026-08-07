@@ -40,11 +40,14 @@ process.env.JWT_SECRET,
 
 );
 
-
+res.cookie("token", token, {
+  httpOnly: true,
+  secure: process.env.NODE_ENV === "production",
+  sameSite: "None",
+  maxAge: 24 * 60 * 60 * 1000,
+});
 
 res.status(201).json({
-token
-,
 
 user:{
 
@@ -93,9 +96,14 @@ process.env.JWT_SECRET,
 
 );
 
-res.json({
+res.cookie("token", token, {
+  httpOnly: true,
+  secure: process.env.NODE_ENV === "production",
+  sameSite: "lax",
+  maxAge: 24 * 60 * 60 * 1000,
+});
 
-token,
+res.json({
 
 user:{
 
@@ -120,5 +128,17 @@ next(err);
 export const getProfile = async (req, res) => {
 
     res.json(req.user);
+
+};
+
+export const logout = (req, res) => {
+
+    res.clearCookie("token", {
+        httpOnly: true,
+        secure: process.env.NODE_ENV === "production",
+        sameSite: "lax",
+    });
+
+    res.json({ message: "Logged out" });
 
 };

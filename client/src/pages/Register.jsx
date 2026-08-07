@@ -23,12 +23,8 @@ const Register = () => {
     try {
       // POST /api/auth/register[cite: 1]
       const res = await register(formData);
-      
 
-       const tokenString = String(res.token);
-      const userObject = res.user;
-
-      loginAuth(tokenString, userObject);
+      loginAuth(res.user);
         navigate('/'); // Redirect to Home[cite: 1]
 
     } catch (err) {

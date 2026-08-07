@@ -1,5 +1,6 @@
 import { createContext, useContext, useEffect, useState } from "react";
 import api from "../api/axios";
+import { logout as logoutRequest } from "../services/auth.service";
 import { useNavigate } from 'react-router-dom';
 
 const AuthContext = createContext();
@@ -12,33 +13,25 @@ export const AuthProvider = ({ children }) => {
 
     useEffect(() => {
 
-        const token = localStorage.getItem("token");
-
-        if (!token) {
-            setLoading(false);
-            return;
-        }
-
+        // The auth token now lives in an httpOnly cookie, which JS can't read,
+        // so the only way to know if we're logged in is to ask the server.
         api.get("/auth/me")
             .then(res => setUser(res.data))
-            .catch(err => {
-                // Only clear the session on an actual auth failure —
-                // not on network errors or server hiccups.
-                if (err.response?.status === 401) {
-                    localStorage.removeItem("token");
-                }
-            })
+            .catch(() => setUser(null))
             .finally(() => setLoading(false));
 
     }, []);
 
-    const login = (token, user) => {
-        localStorage.setItem("token", token);
+    const login = (user) => {
         setUser(user);
     };
 
-    const logout = () => {
-        localStorage.removeItem("token");
+    const logout = async () => {
+        try {
+            await logoutRequest();
+        } catch (err) {
+            console.log("Logout request failed:", err.message);
+        }
         setUser(null);
     };
 
