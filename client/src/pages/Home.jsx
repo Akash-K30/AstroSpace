@@ -1,6 +1,7 @@
-import React, { useState, useEffect, useContext, useCallback } from 'react';
+import React, { useState, useEffect, useContext, useCallback, useRef } from 'react';
 import { getNews, searchNews } from '../services/news.services';
 import NewsCard from '../components/news/Newscard';
+import AsteroidDodge from '../components/loading/AsteroidDodge';
 import { useAuth } from '../context/AuthContext';
 import { useNavigate } from 'react-router-dom';
 
@@ -14,6 +15,8 @@ const Home = () => {
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState(null);
   const [hasMore, setHasMore] = useState(true);
+  const [showLoadingGame, setShowLoadingGame] = useState(false);
+  const slowLoadTimerRef = useRef(null);
 
   // State for search and filters[cite: 1]
   const [filters, setFilters] = useState({
@@ -28,6 +31,13 @@ const Home = () => {
     setLoading(true);
     setError(null);
 
+    if (isNewSearch) {
+      clearTimeout(slowLoadTimerRef.current);
+      slowLoadTimerRef.current = setTimeout(() => {
+        setShowLoadingGame(true);
+      }, 1500);
+    }
+
     try {
       // Build query parameters based on current state[cite: 1]
       const params = {
@@ -39,6 +49,10 @@ const Home = () => {
       };
 
       const data = await getNews(params);
+
+      if (!Array.isArray(data)) {
+        throw new Error("Unexpected response shape from /news endpoint");
+      }
 
       if (isNewSearch) {
         setArticles(data);
@@ -56,6 +70,8 @@ const Home = () => {
       console.error("Failed to fetch news:", err);
       setError("Failed to load news articles. Please try again later.");
     } finally {
+      clearTimeout(slowLoadTimerRef.current);
+      setShowLoadingGame(false);
       setLoading(false);
     }
   }, [page, filters]);
@@ -65,6 +81,10 @@ const Home = () => {
     // If page is 1, it's treated as a new search to replace articles
     fetchNews(page === 1);
   }, [page, filters, fetchNews]);
+
+  useEffect(() => {
+    return () => clearTimeout(slowLoadTimerRef.current);
+  }, []);
 
   // Handlers for filter changes
   const handleSearchChange = (e) => {
@@ -103,20 +123,24 @@ const Home = () => {
       {/* Error State */}
       {error && <div className="error-message">{error}</div>}
 
-      {/* News Grid */}
-      <section className="news-grid">
-        {articles.map((article) => (
-          <NewsCard 
-            key={article._id} 
-            article={article} 
-            
-          />
-        ))}
-      </section>
+      {/* News Grid, or a mini-game if the initial load is taking a while (e.g. Render cold start) */}
+      {showLoadingGame && loading && articles.length === 0 ? (
+        <AsteroidDodge />
+      ) : (
+        <section className="news-grid">
+          {articles.map((article) => (
+            <NewsCard 
+              key={article._id} 
+              article={article} 
+              
+            />
+          ))}
+        </section>
+      )}
 
       {/* Loading State & Pagination[cite: 1] */}
       <div className="pagination-container">
-        {loading && <p>Loading articles...</p>}
+        {loading && !(showLoadingGame && articles.length === 0) && <p>Loading articles...</p>}
         {!loading && hasMore && (
           <button 
             onClick={() => setPage((prev) => prev + 1)}
