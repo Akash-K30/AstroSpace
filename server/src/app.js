@@ -4,6 +4,8 @@ import helmet from "helmet";
 import morgan from "morgan";
 import cookieParser from "cookie-parser";
 
+import "./config/redis.js";
+import { apiLimiter } from "./middleware/rateLimiter.js";
 import errorHandler from "./middleware/errorHandler.js";
 import healthRoutes from "./routes/health.route.js";
 import authRoutes from "./routes/auth.route.js";
@@ -34,6 +36,7 @@ app.use(express.json());
 
 app.use(express.urlencoded({ extended: true }));
 
+app.use("/api", apiLimiter);
 
 app.use("/api/health", healthRoutes);
 app.use("/api/auth", authRoutes);

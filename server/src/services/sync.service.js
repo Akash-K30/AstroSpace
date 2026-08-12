@@ -1,6 +1,7 @@
 import Article from "../models/Article.js";
 import { getAllNews } from "./news.service.js";
 import { normalizeApod, normalizeSpaceflight } from "../utils/normalize.js";
+import { invalidateCache } from "./cache.service.js";
 
 export const executeNewsSync = async () => {
     const { spaceflight, apod } = await getAllNews();
@@ -19,4 +20,7 @@ export const executeNewsSync = async () => {
     }));
 
     await Article.bulkWrite(docs);
+
+    // New/updated articles mean every cached "latest" list is now stale
+    await invalidateCache("news:list:*");
 };
