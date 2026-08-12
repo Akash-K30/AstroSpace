@@ -36,9 +36,11 @@ app.use(express.json());
 
 app.use(express.urlencoded({ extended: true }));
 
+app.use("/api/health", healthRoutes);
+
 app.use("/api", apiLimiter);
 
-app.use("/api/health", healthRoutes);
+
 app.use("/api/auth", authRoutes);
 app.use("/api/news", newsRoutes);
 app.use("/api/bookmarks", bookmarkRoutes);
